@@ -1,13 +1,11 @@
 package com.springbootjpa.student.controller;
 
-
 import com.springbootjpa.student.dao.entity.Student;
 import com.springbootjpa.student.service.StudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 
@@ -43,7 +41,7 @@ public class MainRestController {
     }
 
     @DeleteMapping("/delete")
-    public void deleteStudent(@PathVariable Student student) {
+    public void deleteStudent(@RequestBody Student student) {
         log.info("delete student");
         studentService.deleteStudent(student);
     }
@@ -67,38 +65,38 @@ public class MainRestController {
     }
 
 
-    @GetMapping("/find/")
+    @GetMapping("/find/student/name+surname")
     public Student findStudentByNameAndSurname(@Param(value = "name") String name, @Param(value = "surname") String surname) {
         log.info("find students by name and surname" + name);
         return studentService.findStudentByNameAndSurname(name, surname);
     }
 
-//    @GetMapping("/find")
-//    public Student findStudentByNameAndSurnameAndAge(@Param(value = "name") String name, @Param(value = "surname") String surname, @Param(value = "age") int age) {
-//        log.info("find students by name, surname and age");
-//        return studentService.findStudentByNameAndSurnameAndAge(name, surname, age);
-//    }
-//
-//    @GetMapping("/find")
-//    public Student findStudentByAdress_CountryAndAdress_CityAndAdress_StreetAndAdress_NumberHouse
-//            (@Param(value = "country") String country, @Param(value = "city") String city,
-//             @Param(value = "street") String street, @Param(value = "numberHouse") int numberHouse) {
-//        log.info("find students by country, city, street, numberHouse");
-//        return studentService.findStudentByAdress_CountryAndAdress_CityAndAdress_StreetAndAdress_NumberHouse(country, city, street, numberHouse);
-//    }
-//
-//    @GetMapping("/find")
-//    public Student findStudentByAdress_CountryAndAdress_City
-//            (@Param(value = "country") String country, @Param(value = "city") String city) {
-//        log.info("find students by country and city");
-//        return studentService.findStudentByAdress_CountryAndAdress_City(country, city);
-//    }
-//
-//    @GetMapping("/find")
-//    public Student findStudentByAdress_StreetAndAdress_NumberHouse
-//            (@Param(value = "street") String street, @Param(value = "numberHouse") int numberHouse) {
-//        log.info("find students by street and numberHouse");
-//        return studentService.findStudentByAdress_StreetAndAdress_NumberHouse(street, numberHouse);
-//    }
+    @GetMapping("/find/student/name+surname+age")
+    public Student findStudentByNameAndSurnameAndAge(@Param(value = "name") String name, @Param(value = "surname") String surname, @Param(value = "age") int age) {
+        log.info("find students by name, surname and age");
+        return studentService.findStudentByNameAndSurnameAndAge(name, surname, age);
+    }
+
+    @GetMapping("/find/student/adress")
+    public Student findStudentByAdress_CountryAndAdress_CityAndAdress_StreetAndAdress_NumberHouse
+            (@Param(value = "country") String country, @Param(value = "city") String city,
+             @Param(value = "street") String street, @Param(value = "numberHouse") int numberHouse) {
+        log.info("find students by country, city, street, numberHouse");
+        return studentService.findStudentByAdress_CountryAndAdress_CityAndAdress_StreetAndAdress_NumberHouse(country, city, street, numberHouse);
+    }
+
+    @GetMapping("/find/student/adress/country+city")
+    public Student findStudentByAdress_CountryAndAdress_City
+            (@Param(value = "country") String country, @Param(value = "city") String city) {
+        log.info("find students by country and city");
+        return studentService.findStudentByAdress_CountryAndAdress_City(country, city);
+    }
+
+    @GetMapping("/find/student/adress/street+numberHouse")
+    public Student findStudentByAdress_StreetAndAdress_NumberHouse
+            (@Param(value = "street") String street, @Param(value = "numberHouse") int numberHouse) {
+        log.info("find students by street and numberHouse");
+        return studentService.findStudentByAdress_StreetAndAdress_NumberHouse(street, numberHouse);
+    }
 }
 
