@@ -6,13 +6,14 @@ import javax.persistence.*;
 
 
 @Entity
-@Table
+@Table(name = "adress")
 
 public class AdressEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
+    @Column(name = "id_adress")
     private long id;
 
     @Column

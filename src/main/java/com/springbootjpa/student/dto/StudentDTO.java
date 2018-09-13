@@ -2,6 +2,8 @@ package com.springbootjpa.student.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
+
 public class StudentDTO {
 
     @JsonProperty("adress")
@@ -12,6 +14,8 @@ public class StudentDTO {
     private String surname;
     @JsonProperty("name")
     private String name;
+    @JsonProperty("tasks")
+    private List<TaskDTO>tasks;
 
     public StudentDTO() {
     }
@@ -21,6 +25,14 @@ public class StudentDTO {
         this.age = age;
         this.surname = surname;
         this.name = name;
+    }
+
+    public List<TaskDTO> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<TaskDTO> tasks) {
+        this.tasks = tasks;
     }
 
     public AdressDTO getAdress() {

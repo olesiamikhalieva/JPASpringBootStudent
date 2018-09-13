@@ -5,21 +5,22 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 
 @Entity
-@Table
-public class StudentTaskEntity {
+@Table(name = "task")
+public class TaskEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
+    @Column(name = "id_task")
     private long id;
 
     @Column
     private String task;
 
-    public StudentTaskEntity() {
+    public TaskEntity() {
     }
 
-    public StudentTaskEntity(String task) {
+    public TaskEntity(String task) {
         this.task = task;
     }
 

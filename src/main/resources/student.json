@@ -1,0 +1,22 @@
+{
+  "name": "Vova",
+  "surname": "Petrov",
+  "age": 24,
+  "tasks":
+  [
+    {
+      "task":"read"
+
+    },
+    {
+      "task":"write"
+
+    }
+  ] ,
+  "adress": {
+    "country": "Ukraine",
+    "city": "Dnepr",
+    "street": "Green",
+    "numberHouse": 39
+  }
+}

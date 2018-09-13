@@ -4,16 +4,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
-@Table
+@Table(name = "student")
 
 public class StudentEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
+    @Column(name = "id_student")
     private long id;
 
     @Column
@@ -26,8 +28,12 @@ public class StudentEntity {
     private int age;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id", referencedColumnName = "id")
+    @JoinColumn(name = "id_adress")
     private AdressEntity adressEntity;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_task", referencedColumnName = "id_student")
+    private List<TaskEntity> tasks;
 
     public StudentEntity() {
     }
@@ -69,5 +75,13 @@ public class StudentEntity {
 
     public void setAdressEntity(AdressEntity adressEntity) {
         this.adressEntity = adressEntity;
+    }
+
+    public List<TaskEntity> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<TaskEntity> tasks) {
+        this.tasks = tasks;
     }
 }

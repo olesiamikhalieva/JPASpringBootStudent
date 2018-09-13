@@ -2,9 +2,11 @@ package com.springbootjpa.student.service;
 
 import com.springbootjpa.student.dao.entity.AdressEntity;
 import com.springbootjpa.student.dao.entity.StudentEntity;
+import com.springbootjpa.student.dao.entity.TaskEntity;
 import com.springbootjpa.student.dao.repository.StudentRepository;
 import com.springbootjpa.student.dto.AdressDTO;
 import com.springbootjpa.student.dto.StudentDTO;
+import com.springbootjpa.student.dto.TaskDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,6 +46,13 @@ public class StudentService {
 
         studentDTO.setAdress(adressDTO);
 
+        List<TaskDTO> taskDTOList = new ArrayList<>();
+        for (TaskEntity task : studentEntity.getTasks()) {
+            TaskDTO taskDTO = new TaskDTO();
+            taskDTO.setTasks(task.getTask());
+            taskDTOList.add(taskDTO);
+        }
+        studentDTO.setTasks(taskDTOList);
         return studentDTO;
     }
 
@@ -62,6 +71,14 @@ public class StudentService {
         adressEntity.setNumberHouse(studentDTO.getAdress().getNumberHouse());
 
         studentEntity.setAdressEntity(adressEntity);
+
+        List<TaskEntity>taskEntityList = new ArrayList<>();
+        TaskEntity taskEntity = new TaskEntity();
+        for (TaskDTO taskDTO : studentDTO.getTasks()) {
+            taskEntity.setTask(taskDTO.getTask());
+            taskEntityList.add(taskEntity);
+        }
+        studentEntity.setTasks(taskEntityList);
         try {
             studentRepository.saveAndFlush(studentEntity);
             log.info("student saved");
