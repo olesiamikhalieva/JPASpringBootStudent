@@ -1,71 +1,125 @@
 package com.springbootjpa.student.service;
 
-import com.springbootjpa.student.dao.entity.Student;
+import com.springbootjpa.student.dao.entity.AdressEntity;
+import com.springbootjpa.student.dao.entity.StudentEntity;
 import com.springbootjpa.student.dao.repository.StudentRepository;
+import com.springbootjpa.student.dto.AdressDTO;
+import com.springbootjpa.student.dto.StudentDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-//
 
 @Service
+@Slf4j
 public class StudentService {
+
 
     @Autowired
     private StudentRepository studentRepository;
 
-    public void addStudent(Student student) {
-        studentRepository.saveAndFlush(student);
+
+    public List<StudentDTO> getAllStudentAsStudentDTO() {
+        List<StudentDTO> studentDTOList = new ArrayList<>();
+        for(StudentEntity st : studentRepository.findAll()) {
+            studentDTOList.add(constructStudentDTO(st));
+        }
+        return studentDTOList;
     }
 
-    public List<Student> allStudent() {
-        return studentRepository.findAll();
+    private StudentDTO constructStudentDTO(StudentEntity studentEntity) {
+
+        StudentDTO studentDTO = new StudentDTO();
+        studentDTO.setAge(studentEntity.getAge());
+        studentDTO.setName(studentEntity.getName());
+        studentDTO.setSurname(studentEntity.getSurname());
+
+        AdressDTO adressDTO = new AdressDTO();
+        adressDTO.setCountry(studentEntity.getAdressEntity().getCountry());
+        adressDTO.setCity(studentEntity.getAdressEntity().getCity());
+        adressDTO.setStreet(studentEntity.getAdressEntity().getStreet());
+        adressDTO.setNumberHouse(studentEntity.getAdressEntity().getNumberHouse());
+
+        studentDTO.setAdress(adressDTO);
+
+        return studentDTO;
     }
 
 
-    public Student findStudentBySurnameAndAge(String surname, int age) {
-        return studentRepository.findStudentBySurnameAndAge(surname, age);
+    public String addStudent(StudentDTO studentDTO) {
+
+        StudentEntity studentEntity = new StudentEntity();
+        studentEntity.setName(studentDTO.getName());
+        studentEntity.setSurname(studentDTO.getSurname());
+        studentEntity.setAge(studentDTO.getAge());
+
+        AdressEntity adressEntity = new AdressEntity();
+        adressEntity.setCountry(studentDTO.getAdress().getCountry());
+        adressEntity.setCity(studentDTO.getAdress().getCity());
+        adressEntity.setStreet(studentDTO.getAdress().getStreet());
+        adressEntity.setNumberHouse(studentDTO.getAdress().getNumberHouse());
+
+        studentEntity.setAdressEntity(adressEntity);
+        try {
+            studentRepository.saveAndFlush(studentEntity);
+            log.info("student saved");
+            return "student saved";
+        }
+        catch (Exception e){
+            log.error(" student don't save in DB");
+            e.printStackTrace();
+            return " error, student don't save, see you log";
+        }
+    }
+
+
+    public StudentDTO findStudentBySurnameAndAge(String surname, int age) {
+        StudentEntity studentEntity = studentRepository.findStudentBySurnameAndAge(surname, age);
+        return constructStudentDTO(studentEntity);
     }
 
     public void deleteAllStudent() {
         studentRepository.deleteAll();
     }
 
-    public void deleteStudent(Student student) {
-        studentRepository.delete(student);
-    }
-
     public Long countStudent() {
         return studentRepository.count();
     }
 
-    public List<Student> findStudentsByAge(int age) {
-        return studentRepository.findStudentsByAge(age);
+    public List<StudentDTO> findStudentsByAge(int age) {
+        List<StudentDTO> studentDTOList = new ArrayList<>();
+        for(StudentEntity st : studentRepository.findStudentsByAge(age)) {
+            studentDTOList.add(constructStudentDTO(st));
+        }
+        return studentDTOList;
     }
 
-    public List<Student> findStudentByAgeAfter(int ageAfter) {
-        return studentRepository.findStudentsByAgeAfter(ageAfter);
+    public List<StudentDTO> findStudentByAgeAfter(int ageAfter) {
+        List<StudentDTO> studentDTOList = new ArrayList<>();
+        for(StudentEntity st : studentRepository.findStudentsByAgeAfter(ageAfter)) {
+            studentDTOList.add(constructStudentDTO(st));
+        }
+        return studentDTOList;
     }
 
-    public Student findStudentByNameAndSurname(String name, String surname) {
-        return studentRepository.findStudentByNameAndSurname(name, surname);
+    public StudentDTO findStudentByNameAndSurname(String name, String surname) {
+        StudentEntity studentEntity = studentRepository.findStudentByNameAndSurname(name, surname);
+        return constructStudentDTO(studentEntity);
     }
 
-    public Student findStudentByNameAndSurnameAndAge(String name, String surname, int age) {
-        return studentRepository.findStudentByNameAndSurnameAndAge(name, surname, age);
+    public StudentDTO findStudentByNameAndSurnameAndAge(String name, String surname, int age) {
+        StudentEntity studentEntity = studentRepository.findStudentByNameAndSurnameAndAge(name, surname, age);
+        return constructStudentDTO(studentEntity);
     }
 
-    public Student findStudentByAdress_CountryAndAdress_CityAndAdress_StreetAndAdress_NumberHouse(String country, String city, String street, int numberHouse) {
-        return studentRepository.findStudentByAdress_CountryAndAdress_CityAndAdress_StreetAndAdress_NumberHouse(country, city, street, numberHouse);
+
+    public StudentDTO findStudentEntityByAdressEntity_CountryAndAdressEntity_City(String country, String city) {
+        StudentEntity studentEntity = studentRepository.findStudentEntityByAdressEntity_CountryAndAdressEntity_City(country,city);
+        return constructStudentDTO(studentEntity);
     }
 
-    public Student findStudentByAdress_CountryAndAdress_City(String country, String city) {
-        return studentRepository.findStudentByAdress_CountryAndAdress_City(country, city);
-    }
-
-    public Student findStudentByAdress_StreetAndAdress_NumberHouse(String street, int numberHouse) {
-        return studentRepository.findStudentByAdress_StreetAndAdress_NumberHouse(street, numberHouse);
-    }
 
 
 }

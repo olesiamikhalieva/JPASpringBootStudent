@@ -1,0 +1,11 @@
+{
+  "name": "Vasya",
+  "surname": "Pupkin",
+  "age": 24,
+  "adress": {
+    "country": "Ukraine",
+    "city": "Dnepr",
+    "street": "Red",
+    "numberHouse": 34
+  }
+}
