@@ -14,7 +14,7 @@ public class TaskEntity {
     @Column(name = "id_task")
     private long id;
 
-    @Column
+    @Column(nullable = false)
     private String task;
 
     public TaskEntity() {

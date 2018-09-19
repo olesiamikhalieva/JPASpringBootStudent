@@ -31,8 +31,7 @@ public class StudentEntity {
     @JoinColumn(name = "id_adress")
     private AdressEntity adressEntity;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id_task", referencedColumnName = "id_student")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL,orphanRemoval = true)
     private List<TaskEntity> tasks;
 
     public StudentEntity() {

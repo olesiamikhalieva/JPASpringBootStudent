@@ -73,8 +73,8 @@ public class StudentService {
         studentEntity.setAdressEntity(adressEntity);
 
         List<TaskEntity>taskEntityList = new ArrayList<>();
-        TaskEntity taskEntity = new TaskEntity();
         for (TaskDTO taskDTO : studentDTO.getTasks()) {
+            TaskEntity taskEntity = new TaskEntity();
             taskEntity.setTask(taskDTO.getTask());
             taskEntityList.add(taskEntity);
         }
