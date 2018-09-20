@@ -25,10 +25,11 @@ public class MainRestController {
 
     @PostMapping("/add")
     public String addStudent(@RequestBody StudentDTO studentDTO) {
-        log.info("student {}", studentDTO.getAdress().getCountry());
+        log.info("student {}________________________________", studentDTO.getTeachers().get(0));
         studentService.addStudent(studentDTO);
-        return "student saved";
+        return "student saved controller";
     }
+
 
     @GetMapping("/getAll")
     public List<StudentDTO> getStudent() {

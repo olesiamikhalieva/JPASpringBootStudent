@@ -13,7 +13,7 @@ public class AdressEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
-    @Column(name = "id_adress")
+    @Column(name = "adress_id")
     private long id;
 
     @Column

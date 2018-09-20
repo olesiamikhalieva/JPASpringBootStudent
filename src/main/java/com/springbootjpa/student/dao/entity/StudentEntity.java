@@ -2,20 +2,20 @@ package com.springbootjpa.student.dao.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
-@Entity
-@Table(name = "student")
+@Entity()
+@Table(name = "students")
 
 public class StudentEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
-    @Column(name = "id_student")
+    @Column(name = "student_id")
     private long id;
 
     @Column
@@ -28,11 +28,14 @@ public class StudentEntity {
     private int age;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id_adress")
+    @JoinColumn(name = "adress_id")
     private AdressEntity adressEntity;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL,orphanRemoval = true)
     private List<TaskEntity> tasks;
+
+    @ManyToMany(mappedBy = "students")
+    private List<TeacherEntity> teachers;
 
     public StudentEntity() {
     }
@@ -42,6 +45,23 @@ public class StudentEntity {
         this.surname = surname;
         this.age = age;
         this.adressEntity = adressEntity;
+    }
+
+    public StudentEntity(String name, String surname, int age, AdressEntity adressEntity, List<TaskEntity> tasks, List<TeacherEntity> teachers) {
+        this.name = name;
+        this.surname = surname;
+        this.age = age;
+        this.adressEntity = adressEntity;
+        this.tasks = tasks;
+        this.teachers = teachers;
+    }
+
+    public List<TeacherEntity> getTeachers() {
+        return teachers;
+    }
+
+    public void setTeachers(List<TeacherEntity> teachers) {
+        this.teachers = teachers;
     }
 
     public String getName() {
@@ -82,5 +102,13 @@ public class StudentEntity {
 
     public void setTasks(List<TaskEntity> tasks) {
         this.tasks = tasks;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

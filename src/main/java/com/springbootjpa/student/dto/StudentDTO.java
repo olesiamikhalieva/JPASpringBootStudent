@@ -16,6 +16,8 @@ public class StudentDTO {
     private String name;
     @JsonProperty("tasks")
     private List<TaskDTO>tasks;
+    @JsonProperty("teachers")
+    private List<TeacherDTO>teachers;
 
     public StudentDTO() {
     }
@@ -25,6 +27,23 @@ public class StudentDTO {
         this.age = age;
         this.surname = surname;
         this.name = name;
+    }
+
+    public StudentDTO(AdressDTO adress, int age, String surname, String name, List<TaskDTO> tasks, List<TeacherDTO> teachers) {
+        this.adress = adress;
+        this.age = age;
+        this.surname = surname;
+        this.name = name;
+        this.tasks = tasks;
+        this.teachers = teachers;
+    }
+
+    public List<TeacherDTO> getTeachers() {
+        return teachers;
+    }
+
+    public void setTeachers(List<TeacherDTO> teachers) {
+        this.teachers = teachers;
     }
 
     public List<TaskDTO> getTasks() {

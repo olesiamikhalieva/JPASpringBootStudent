@@ -3,10 +3,13 @@ package com.springbootjpa.student.service;
 import com.springbootjpa.student.dao.entity.AdressEntity;
 import com.springbootjpa.student.dao.entity.StudentEntity;
 import com.springbootjpa.student.dao.entity.TaskEntity;
+import com.springbootjpa.student.dao.entity.TeacherEntity;
 import com.springbootjpa.student.dao.repository.StudentRepository;
+import com.springbootjpa.student.dao.repository.TeacherRepository;
 import com.springbootjpa.student.dto.AdressDTO;
 import com.springbootjpa.student.dto.StudentDTO;
 import com.springbootjpa.student.dto.TaskDTO;
+import com.springbootjpa.student.dto.TeacherDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +24,8 @@ public class StudentService {
 
     @Autowired
     private StudentRepository studentRepository;
+    @Autowired
+    private TeacherRepository teacherRepository;
 
 
     public List<StudentDTO> getAllStudentAsStudentDTO() {
@@ -79,16 +84,29 @@ public class StudentService {
             taskEntityList.add(taskEntity);
         }
         studentEntity.setTasks(taskEntityList);
+
+        List<TeacherEntity>teacherEntityList = new ArrayList<>();
+        for (TeacherDTO teacherDTO : studentDTO.getTeachers()) {
+            TeacherEntity teacherEntity = new TeacherEntity();
+            teacherEntity.setSurname(teacherDTO.getSurname());
+            teacherEntityList.add(teacherEntity);
+        }
+        studentEntity.setTeachers(teacherEntityList);
         try {
             studentRepository.saveAndFlush(studentEntity);
+            for (TeacherEntity teacher : studentEntity.getTeachers()) {
+                teacherRepository.saveAndFlush(teacher);
+            }
             log.info("student saved");
-            return "student saved";
+            return "-------saved";
         }
         catch (Exception e){
             log.error(" student don't save in DB");
             e.printStackTrace();
             return " error, student don't save, see you log";
         }
+
+
     }
 
 
