@@ -2,21 +2,31 @@
   "name": "Vova",
   "surname": "Petrov",
   "age": 24,
-  "tasks":
-  [
+  "tasks": [
     {
-      "task":"read"
-
+      "task": "read"
     },
     {
-      "task":"write"
-
+      "task": "write"
+    },
+    {
+      "task": "update"
     }
-  ] ,
+  ],
   "adress": {
     "country": "Ukraine",
     "city": "Dnepr",
     "street": "Green",
     "numberHouse": 39
-  }
+  },
+  "teachers":
+  [
+    {
+      "surname":"Sidorov"
+    } ,
+    {
+      "surname":"Ivanov"
+
+    }
+  ]
 }
